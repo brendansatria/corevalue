@@ -38,7 +38,7 @@ export function TimeUpDialog({ open, score, penalty, onNextRound, isLastRound }:
             {penalty > 0 && (
               <>
                 <br />
-                You received a <span className="font-bold">-{penalty} point</span> penalty for not connecting all regular customers.
+                You received a <span className="font-bold">-{penalty} point</span> penalty for not connecting all Pelanggan Tetap.
               </>
             )}
             <br />

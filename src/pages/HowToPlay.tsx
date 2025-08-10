@@ -19,7 +19,7 @@ const HowToPlay = () => {
             <li>Each connected customer will increase your score.</li>
             <li>You have a limited time for each round, so be quick!</li>
             <li>Connect all customers before time runs out for a <span className="font-bold text-green-600">+10 point</span> bonus!</li>
-            <li>If the timer runs out, you'll get a <span className="font-bold text-red-600">-5 point</span> penalty for each regular customer you missed.</li>
+            <li>If the timer runs out, you'll get a <span className="font-bold text-red-600">-5 point</span> penalty for each Pelanggan Tetap you missed.</li>
           </ul>
           <p className="font-bold text-center pt-4">Good luck!</p>
         </div>
