@@ -4,10 +4,12 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { RoundCompleteDialog } from '@/components/game/RoundCompleteDialog';
 import { TimeUpDialog } from '@/components/game/TimeUpDialog';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useGame } from '@/context/GameContext';
 
 const Game = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { resetScores } = useGame();
 
   const [round, setRound] = useState(() => location.state?.round || 1);
   const [timer, setTimer] = useState(() => location.state?.timeLimit || 30);
@@ -22,6 +24,10 @@ const Game = () => {
   const [connectedTiles, setConnectedTiles] = useState<Set<number>>(new Set());
 
   useEffect(() => {
+    if (location.state?.round === 1) {
+      resetScores();
+    }
+
     const newRound = location.state?.round || 1;
     const newTimeLimit = location.state?.timeLimit || 30;
     const newInitialPenalty = location.state?.initialPenalty || 0;
@@ -37,7 +43,7 @@ const Game = () => {
     setIsTimeUp(false);
     setPenalty(0);
     setConnectedTiles(new Set());
-  }, [location.state]);
+  }, [location.state, resetScores]);
 
   const currentRoundData = useMemo(() => {
     return gameRounds[round as keyof typeof gameRounds] || gameRounds[1];
@@ -73,18 +79,8 @@ const Game = () => {
     }
   }, [gameState, initialPenalty]);
 
-  const handleNextRound = () => {
-    const nextRound = round + 1;
-    if (nextRound > 4) {
-      navigate('/');
-      return;
-    }
-
-    if (nextRound === 2 || nextRound === 4) {
-      navigate(`/challenge/${nextRound}`);
-    } else {
-      navigate('/game', { state: { round: nextRound, timeLimit: 30, initialPenalty: 0 } });
-    }
+  const handleNext = (finalScore: number) => {
+    navigate('/case-study', { state: { round: round, miniGameScore: finalScore } });
   };
 
   useEffect(() => {
@@ -174,8 +170,8 @@ const Game = () => {
       <RoundCompleteDialog
         open={isRoundComplete}
         score={score}
-        onNextRound={handleNextRound}
-        isLastRound={round === 4}
+        onNextRound={() => handleNext(score)}
+        isLastRound={false}
         bonusAwarded={bonusAwarded}
         initialPenalty={initialPenalty}
       />
@@ -183,8 +179,8 @@ const Game = () => {
         open={isTimeUp}
         score={score}
         penalty={penalty}
-        onNextRound={handleNextRound}
-        isLastRound={round === 4}
+        onNextRound={() => handleNext(score)}
+        isLastRound={false}
         initialPenalty={initialPenalty}
       />
     </div>

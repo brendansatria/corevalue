@@ -7,7 +7,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useNavigate } from "react-router-dom";
 
 interface TimeUpDialogProps {
   open: boolean;
@@ -19,16 +18,6 @@ interface TimeUpDialogProps {
 }
 
 export function TimeUpDialog({ open, score, penalty, onNextRound, isLastRound, initialPenalty }: TimeUpDialogProps) {
-  const navigate = useNavigate();
-
-  const handleAction = () => {
-    if (isLastRound) {
-      navigate('/');
-    } else {
-      onNextRound();
-    }
-  };
-
   return (
     <AlertDialog open={open}>
       <AlertDialogContent>
@@ -53,8 +42,8 @@ export function TimeUpDialog({ open, score, penalty, onNextRound, isLastRound, i
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction onClick={handleAction}>
-            {isLastRound ? "Finish Game" : "Next Round"}
+          <AlertDialogAction onClick={onNextRound}>
+            Continue to Case Study
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
