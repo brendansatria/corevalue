@@ -34,8 +34,8 @@ const Game = () => {
       <div
         className="relative bg-contain bg-no-repeat bg-center"
         style={{
-          width: '700px',
-          height: '470.35px',
+          width: '470.35px',
+          height: '700px',
           backgroundImage: `url('${gameBg}')`,
         }}
       >
