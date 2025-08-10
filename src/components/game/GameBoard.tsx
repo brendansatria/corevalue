@@ -1,27 +1,28 @@
 import { TileConfig } from '@/data/gameData';
 import { Tile } from './Tile';
-import { cn } from '@/lib/utils';
 
 interface GameBoardProps {
   layout: TileConfig[][];
 }
 
 export function GameBoard({ layout }: GameBoardProps) {
-  // Add a guard clause to prevent crash if layout is not yet available.
   if (!layout) {
     return null;
   }
 
   const rows = layout.length;
-  const gridClasses = rows === 6 ? 'grid-rows-6' : 'grid-rows-5';
+  
+  // Using inline styles to create a grid with fixed-size cells
+  // to match the requested tile dimensions.
+  const gridStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(5, 80.55px)',
+    gridTemplateRows: `repeat(${rows}, 80.55px)`,
+    gap: '4px', // Corresponds to Tailwind's `gap-1`
+  };
 
   return (
-    <div
-      className={cn(
-        'grid grid-cols-5 gap-1 w-full h-full',
-        gridClasses
-      )}
-    >
+    <div style={gridStyle}>
       {layout.flat().map((tileConfig, index) => (
         <Tile key={index} config={tileConfig} />
       ))}
