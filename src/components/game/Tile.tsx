@@ -21,10 +21,6 @@ export function Tile({ config }: TileProps) {
     }
   };
 
-  if (config.type === 'empty') {
-    return <div className="w-full h-full bg-[#166448] rounded-md" />;
-  }
-
   return (
     <div
       className={cn(

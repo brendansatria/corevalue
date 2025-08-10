@@ -19,49 +19,50 @@ const Game = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Reset timer and score when round changes
   useEffect(() => {
     setTimer(30);
     setScore(0);
   }, [round]);
 
   return (
-    <div className="w-full min-h-screen bg-gray-800 flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-[450px] mx-auto">
-        <div
-          className="relative w-full bg-contain bg-no-repeat bg-center transition-all duration-500"
-          style={{
-            backgroundImage: `url('${currentRoundData.boardImage}')`,
-            paddingTop: currentRoundData.boardAspectRatio,
-          }}
-        >
-          {/* Timer */}
-          <div className="absolute text-white text-4xl font-bold" style={{ top: '9.5%', left: '42%' }}>
-            {String(timer).padStart(2, '0')}
-          </div>
-          {/* Score */}
-          <div className="absolute text-white text-4xl font-bold" style={{ top: '9.5%', left: '69%' }}>
-            {String(score).padStart(2, '0')}
-          </div>
-          {/* Game Board */}
-          <div className="absolute" style={{ top: '18%', bottom: '4%', left: '6%', right: '6%' }}>
-            <GameBoard layout={currentRoundData.layout} />
+    <div
+      className="w-full min-h-screen bg-cover bg-center flex flex-col items-center justify-start p-2 sm:p-4"
+      style={{ backgroundImage: "url('/assets/game/header.png')" }}
+    >
+      <header className="w-full max-w-2xl flex justify-between items-center mb-4">
+        <img src="/assets/game/header_icon_1.png" alt="Avatar" className="h-12 sm:h-16" />
+        <img src="/assets/game/header_text.png" alt="Find the way to the customer!" className="h-10 sm:h-12" />
+        <div className="relative">
+          <img src="/assets/game/header_timer_scoring.png" alt="Stats background" className="h-12 sm:h-16" />
+          <div className="absolute inset-0 flex items-center justify-center sm:justify-around text-white font-bold text-lg sm:text-2xl">
+            <div className="flex items-center gap-1 sm:gap-2">
+              <img src="/assets/game/header_icon_timer.png" alt="Timer" className="h-6 sm:h-8" />
+              <span>{String(timer).padStart(2, '0')}</span>
+            </div>
+            <div className="flex items-center gap-1 sm:gap-2">
+              <img src="/assets/game/header_icon_score.png" alt="Score" className="h-6 sm:h-8" />
+              <span>{String(score).padStart(2, '0')}</span>
+            </div>
           </div>
         </div>
-      </div>
-      {/* Round switcher for testing */}
+      </header>
+
+      <main className="w-full max-w-[500px] mx-auto">
+        <GameBoard layout={currentRoundData.layout} />
+      </main>
+
       <div className="flex gap-2 mt-4">
         <Button onClick={() => setRound(1)} disabled={round === 1}>
-          Round 1
+          R1
         </Button>
         <Button onClick={() => setRound(2)} disabled={round === 2}>
-          Round 2
+          R2
         </Button>
         <Button onClick={() => setRound(3)} disabled={round === 3}>
-          Round 3
+          R3
         </Button>
         <Button onClick={() => setRound(4)} disabled={round === 4}>
-          Round 4
+          R4
         </Button>
       </div>
     </div>
