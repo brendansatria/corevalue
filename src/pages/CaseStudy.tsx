@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useGame } from '@/context/GameContext';
 import { caseStudies, CoreValue } from '@/data/caseStudyData';
 import { CaseStudyResultDialog } from '@/components/game/CaseStudyResultDialog';
-import { CircleUserRound, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const CaseStudy = () => {
@@ -90,16 +90,8 @@ const CaseStudy = () => {
           backgroundImage: `url('/assets/game/background_phase_2.png')`,
         }}
       >
-        {/* Header */}
-        <div className="absolute top-[20px] left-0 right-0 px-6 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-                <CircleUserRound size={60} className="text-gray-700 bg-orange-200 rounded-full p-1" />
-                <div className="bg-white rounded-lg px-4 py-2 shadow-md">
-                    <p className="font-bold text-gray-800">Pilih 2 jawaban yang tepat!</p>
-                </div>
-            </div>
-        </div>
-        <div className="absolute top-[95px] left-0 right-0 px-6 flex items-center justify-end gap-4">
+        {/* Score Display */}
+        <div className="absolute top-[20px] left-0 right-0 px-6 flex items-center justify-end gap-4">
             {/* CP Score */}
             <div className="flex items-center gap-2 bg-gray-800 bg-opacity-70 rounded-full px-3 py-1">
                 <Heart size={24} className="text-red-400" />
@@ -113,18 +105,18 @@ const CaseStudy = () => {
         </div>
 
         {/* Narrative Box */}
-        <div className="absolute top-[160px] left-6 right-6 h-[300px] bg-white bg-opacity-90 rounded-lg p-4 overflow-y-auto shadow-inner">
+        <div className="absolute top-[80px] left-6 right-6 h-[350px] bg-white bg-opacity-90 rounded-lg p-4 overflow-y-auto shadow-inner">
             <p className="text-gray-800 text-lg whitespace-pre-wrap">{narrative}</p>
         </div>
 
         {/* Answer Options */}
-        <div className="absolute bottom-[40px] left-6 right-6 flex flex-col gap-3">
+        <div className="absolute bottom-[40px] left-6 right-6 grid grid-cols-2 gap-3">
             {currentCase.options.map((option) => (
                 <Button
                     key={option}
                     onClick={() => handleSelectAnswer(option)}
                     className={cn(
-                        "w-full text-lg py-6 transition-all duration-200",
+                        "w-full text-lg py-5 transition-all duration-200",
                         selectedAnswers.includes(option) ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-700 hover:bg-gray-800'
                     )}
                 >
@@ -134,7 +126,7 @@ const CaseStudy = () => {
             <Button
                 onClick={handleSubmit}
                 disabled={selectedAnswers.length === 0}
-                className="w-full text-xl py-7 mt-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400"
+                className="w-full text-xl py-5 bg-green-600 hover:bg-green-700 disabled:bg-gray-400"
             >
                 Submit
             </Button>
