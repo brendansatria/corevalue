@@ -90,21 +90,21 @@ const CaseStudy = () => {
         }}
       >
         {/* CP Score */}
-        <div className="absolute w-[100px] text-center" style={{ top: '102px', left: '85px' }}>
-            <span className="font-roboto text-white font-bold text-2xl drop-shadow-lg">{totalSatisfaction}</span>
+        <div className="absolute flex items-center justify-center" style={{ top: '85px', left: '85px', width: '100px', height: '49px' }}>
+            <span className="font-roboto text-white font-bold drop-shadow-lg" style={{ fontSize: '35.6px', lineHeight: '1' }}>{totalSatisfaction}</span>
         </div>
         {/* RP Score */}
-        <div className="absolute w-[100px] text-center" style={{ top: '102px', right: '85px' }}>
-            <span className="font-roboto text-white font-bold text-2xl drop-shadow-lg">{totalRevenue}</span>
+        <div className="absolute flex items-center justify-center" style={{ top: '85px', right: '85px', width: '100px', height: '49px' }}>
+            <span className="font-roboto text-white font-bold drop-shadow-lg" style={{ fontSize: '35.6px', lineHeight: '1' }}>{totalRevenue}</span>
         </div>
 
         {/* Narrative Box */}
-        <div className="absolute left-6 right-6 bg-white bg-opacity-90 rounded-lg p-4 overflow-y-auto shadow-inner" style={{ top: '22.74%', height: '280px' }}>
+        <div className="absolute left-6 right-6 bg-white bg-opacity-90 rounded-lg p-4 overflow-y-auto shadow-inner" style={{ top: '22.74%', height: '285px' }}>
             <p className="text-gray-800 text-lg whitespace-pre-wrap">{narrative}</p>
         </div>
 
         {/* Answer Options */}
-        <div className="absolute bottom-[40px] left-6 right-6 grid grid-cols-2 gap-3">
+        <div className="absolute left-6 right-6 grid grid-cols-2 gap-3" style={{ top: '456px' }}>
             {currentCase.options.map((option) => (
                 <Button
                     key={option}
@@ -120,7 +120,7 @@ const CaseStudy = () => {
             <Button
                 onClick={handleSubmit}
                 disabled={selectedAnswers.length === 0}
-                className="w-full text-xl py-5 bg-green-600 hover:bg-green-700 disabled:bg-gray-400"
+                className="w-full text-xl py-5 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 col-span-2"
             >
                 Submit
             </Button>
