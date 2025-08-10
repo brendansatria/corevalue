@@ -13,6 +13,10 @@ export function Tile({ config }: TileProps) {
     setRotation(config.initialRotation ?? 0);
   }, [config]);
 
+  if (config.type === 'empty') {
+    return <div />;
+  }
+
   const isInteractive = config.rotatable && config.type === 'path';
 
   const handleClick = () => {

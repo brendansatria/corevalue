@@ -7,7 +7,7 @@ export interface TileConfig {
 
 const createEmptyGrid = (rows: number, cols: number): TileConfig[][] =>
   Array.from({ length: rows }, () =>
-    Array.from({ length: cols }, () => ({ type: 'empty', asset: '/assets/game/blank_tile.png' }))
+    Array.from({ length: cols }, () => ({ type: 'empty' }))
   );
 
 // Round 1: 5x5 grid
