@@ -39,14 +39,26 @@ const Game = () => {
           backgroundImage: `url('${gameBg}')`,
         }}
       >
-        {/* Timer Overlay */}
-        <div className="absolute top-[11.5%] left-[51%] w-[20%] h-[7%] flex items-center justify-center">
-          <span className="text-black font-bold text-xl sm:text-2xl">{String(timer).padStart(2, '0')}</span>
+        {/* Timer */}
+        <div className="absolute top-[11.5%] left-[51%] w-[20%] h-[7%]">
+          <img src="/assets/game/header_background_timer.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
+          <div className="relative w-full h-full flex items-center justify-center gap-1">
+            <img src="/assets/game/header_icon_timer.png" alt="Timer" className="h-1/2 object-contain" />
+            <span className="font-roboto text-white font-bold" style={{ fontSize: '8pt' }}>
+              {String(timer).padStart(2, '0')}
+            </span>
+          </div>
         </div>
 
-        {/* Score Overlay */}
-        <div className="absolute top-[11.5%] left-[74%] w-[20%] h-[7%] flex items-center justify-center">
-          <span className="text-black font-bold text-xl sm:text-2xl">{String(score).padStart(2, '0')}</span>
+        {/* Score */}
+        <div className="absolute top-[11.5%] left-[74%] w-[20%] h-[7%]">
+          <img src="/assets/game/header_background_score.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
+          <div className="relative w-full h-full flex items-center justify-center gap-1">
+            <img src="/assets/game/header_icon_score.png" alt="Score" className="h-1/2 object-contain" />
+            <span className="font-roboto text-white font-bold" style={{ fontSize: '8pt' }}>
+              {String(score).padStart(2, '0')}
+            </span>
+          </div>
         </div>
 
         {/* Game Board Overlay Container */}
