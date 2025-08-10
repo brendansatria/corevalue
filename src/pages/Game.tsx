@@ -31,11 +31,11 @@ const Game = () => {
     setScore(newScore);
   }, []);
 
-  const handleRoundComplete = useCallback(() => {
+  const handleRoundComplete = useCallback((customerScore: number) => {
     if (gameState === 'playing') {
       setGameState('finished');
       setIsRoundComplete(true);
-      setScore(prev => prev + 10);
+      setScore(customerScore + 10);
       setBonusAwarded(true);
     }
   }, [gameState]);

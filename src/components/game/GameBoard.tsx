@@ -8,7 +8,7 @@ interface GameBoardProps {
   onStartGame: () => void;
   gameState: 'ready' | 'playing' | 'finished';
   onScoreChange: (score: number) => void;
-  onRoundComplete: () => void;
+  onRoundComplete: (customerScore: number) => void;
 }
 
 export function GameBoard({ layout, onStartGame, gameState, onScoreChange, onRoundComplete }: GameBoardProps) {
@@ -96,10 +96,13 @@ export function GameBoard({ layout, onStartGame, gameState, onScoreChange, onRou
         connectedCustomers++;
       }
     });
-    onScoreChange(currentScore);
 
-    if (gameState === 'playing' && totalCustomers > 0 && connectedCustomers === totalCustomers) {
-      onRoundComplete();
+    const isComplete = gameState === 'playing' && totalCustomers > 0 && connectedCustomers === totalCustomers;
+
+    if (isComplete) {
+      onRoundComplete(currentScore);
+    } else {
+      onScoreChange(currentScore);
     }
   }, [connectedTiles, flatLayout, onScoreChange, onRoundComplete, gameState]);
 
