@@ -15,9 +15,10 @@ interface RoundCompleteDialogProps {
   onNextRound: () => void;
   isLastRound: boolean;
   bonusAwarded: boolean;
+  initialPenalty: number;
 }
 
-export function RoundCompleteDialog({ open, score, onNextRound, isLastRound, bonusAwarded }: RoundCompleteDialogProps) {
+export function RoundCompleteDialog({ open, score, onNextRound, isLastRound, bonusAwarded, initialPenalty }: RoundCompleteDialogProps) {
   const navigate = useNavigate();
 
   const handleAction = () => {
@@ -39,6 +40,12 @@ export function RoundCompleteDialog({ open, score, onNextRound, isLastRound, bon
               <>
                 <br />
                 You've earned a <span className="font-bold">+10 point</span> completion bonus!
+              </>
+            )}
+            {initialPenalty > 0 && (
+              <>
+                <br />
+                A <span className="font-bold">-{initialPenalty} point</span> penalty was applied for the extra time.
               </>
             )}
             <br />

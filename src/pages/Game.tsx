@@ -3,10 +3,16 @@ import { gameRounds } from '@/data/gameData';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { RoundCompleteDialog } from '@/components/game/RoundCompleteDialog';
 import { TimeUpDialog } from '@/components/game/TimeUpDialog';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Game = () => {
-  const [round, setRound] = useState(1);
-  const [timer, setTimer] = useState(30);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [round, setRound] = useState(() => location.state?.round || 1);
+  const [timer, setTimer] = useState(() => location.state?.timeLimit || 30);
+  const [initialPenalty, setInitialPenalty] = useState(() => location.state?.initialPenalty || 0);
+  
   const [score, setScore] = useState(0);
   const [gameState, setGameState] = useState<'ready' | 'playing' | 'finished'>('ready');
   const [isRoundComplete, setIsRoundComplete] = useState(false);
@@ -39,14 +45,22 @@ const Game = () => {
     if (gameState === 'playing') {
       setGameState('finished');
       setIsRoundComplete(true);
-      setScore(customerScore + 10);
+      setScore(customerScore + 10 - initialPenalty);
       setBonusAwarded(true);
     }
-  }, [gameState]);
+  }, [gameState, initialPenalty]);
 
   const handleNextRound = () => {
-    if (round < 4) {
-      setRound(prev => prev + 1);
+    const nextRound = round + 1;
+    if (nextRound > 4) {
+      navigate('/');
+      return;
+    }
+
+    if (nextRound === 2 || nextRound === 4) {
+      navigate(`/challenge/${nextRound}`);
+    } else {
+      navigate('/game', { state: { round: nextRound, timeLimit: 30, initialPenalty: 0 } });
     }
   };
 
@@ -68,33 +82,20 @@ const Game = () => {
   useEffect(() => {
     if (gameState === 'finished' && !isRoundComplete) {
       const flatLayout = currentRoundData.layout.flat();
-      let calculatedPenalty = 0;
+      let connectionPenalty = 0;
       flatLayout.forEach((tile, index) => {
         if (tile.type === 'customer' && (tile.points ?? 0) > 5) {
           if (!connectedTiles.has(index)) {
-            calculatedPenalty += 5;
+            connectionPenalty += 5;
           }
         }
       });
 
-      if (calculatedPenalty > 0) {
-        setScore(prev => Math.max(0, prev - calculatedPenalty));
-        setPenalty(calculatedPenalty);
-      }
+      setScore(prev => Math.max(0, prev - connectionPenalty - initialPenalty));
+      setPenalty(connectionPenalty);
       setIsTimeUp(true);
     }
-  }, [gameState, isRoundComplete, connectedTiles, currentRoundData.layout]);
-
-  useEffect(() => {
-    setTimer(30);
-    setScore(0);
-    setGameState('ready');
-    setIsRoundComplete(false);
-    setBonusAwarded(false);
-    setIsTimeUp(false);
-    setPenalty(0);
-    setConnectedTiles(new Set());
-  }, [round]);
+  }, [gameState, isRoundComplete, connectedTiles, currentRoundData.layout, initialPenalty]);
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-gray-200 p-4">
@@ -153,6 +154,7 @@ const Game = () => {
         onNextRound={handleNextRound}
         isLastRound={round === 4}
         bonusAwarded={bonusAwarded}
+        initialPenalty={initialPenalty}
       />
       <TimeUpDialog
         open={isTimeUp}
@@ -160,6 +162,7 @@ const Game = () => {
         penalty={penalty}
         onNextRound={handleNextRound}
         isLastRound={round === 4}
+        initialPenalty={initialPenalty}
       />
     </div>
   );

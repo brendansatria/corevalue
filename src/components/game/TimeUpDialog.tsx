@@ -15,9 +15,10 @@ interface TimeUpDialogProps {
   penalty: number;
   onNextRound: () => void;
   isLastRound: boolean;
+  initialPenalty: number;
 }
 
-export function TimeUpDialog({ open, score, penalty, onNextRound, isLastRound }: TimeUpDialogProps) {
+export function TimeUpDialog({ open, score, penalty, onNextRound, isLastRound, initialPenalty }: TimeUpDialogProps) {
   const navigate = useNavigate();
 
   const handleAction = () => {
@@ -35,10 +36,16 @@ export function TimeUpDialog({ open, score, penalty, onNextRound, isLastRound }:
           <AlertDialogTitle>Time's Up!</AlertDialogTitle>
           <AlertDialogDescription>
             You ran out of time.
+            {initialPenalty > 0 && (
+              <>
+                <br />
+                You chose a longer time for a <span className="font-bold">-{initialPenalty} point</span> penalty.
+              </>
+            )}
             {penalty > 0 && (
               <>
                 <br />
-                You received a <span className="font-bold">-{penalty} point</span> penalty for not connecting all Pelanggan Tetap.
+                You received an additional <span className="font-bold">-{penalty} point</span> penalty for not connecting all Pelanggan Tetap.
               </>
             )}
             <br />
