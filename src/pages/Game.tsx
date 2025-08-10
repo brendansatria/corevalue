@@ -78,7 +78,7 @@ const Game = () => {
       });
 
       if (calculatedPenalty > 0) {
-        setScore(prev => prev - calculatedPenalty);
+        setScore(prev => Math.max(0, prev - calculatedPenalty));
         setPenalty(calculatedPenalty);
       }
       setIsTimeUp(true);
