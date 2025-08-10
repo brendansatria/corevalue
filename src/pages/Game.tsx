@@ -45,11 +45,13 @@ const Game = () => {
           style={{ top: '67.4px', left: '152.07px' }}
         >
           <img src="/assets/game/header_background_timer.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
-          <div className="relative w-full h-full flex items-center justify-center gap-1">
-            <img src="/assets/game/header_icon_timer.png" alt="Timer" className="object-contain" style={{ height: '35.6px' }} />
-            <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
-              {String(timer).padStart(2, '0')}
-            </span>
+          <div className="relative w-full h-full flex items-center justify-center">
+            <div className="flex items-center justify-center gap-1 relative" style={{ left: '-4px' }}>
+              <img src="/assets/game/header_icon_timer.png" alt="Timer" className="object-contain" style={{ height: '35.6px' }} />
+              <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
+                {String(timer).padStart(2, '0')}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -59,11 +61,13 @@ const Game = () => {
           style={{ top: '67.4px', left: '294.18px' }}
         >
           <img src="/assets/game/header_background_score.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
-          <div className="relative w-full h-full flex items-center justify-center gap-1">
-            <img src="/assets/game/header_icon_score.png" alt="Score" className="object-contain" style={{ height: '35.6px' }} />
-            <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
-              {String(score).padStart(2, '0')}
-            </span>
+          <div className="relative w-full h-full flex items-center justify-center">
+            <div className="flex items-center justify-center gap-1 relative" style={{ left: '-4px' }}>
+              <img src="/assets/game/header_icon_score.png" alt="Score" className="object-contain" style={{ height: '35.6px' }} />
+              <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
+                {String(score).padStart(2, '0')}
+              </span>
+            </div>
           </div>
         </div>
 
