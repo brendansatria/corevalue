@@ -22,10 +22,10 @@ export function Tile({ config, onStartGame, gameState }: TileProps) {
   const isStartTile = config.type === 'start';
   const isPathTile = config.type === 'path';
 
-  const isInteractive = (config.rotatable && isPathTile) || (isStartTile && gameState === 'ready');
+  const isInteractive = (config.rotatable && isPathTile && gameState === 'playing') || (isStartTile && gameState === 'ready');
 
   const handleClick = () => {
-    if (config.rotatable && isPathTile) {
+    if (config.rotatable && isPathTile && gameState === 'playing') {
       setRotation((prev) => (prev + 90) % 360);
     } else if (isStartTile && gameState === 'ready') {
       onStartGame();
