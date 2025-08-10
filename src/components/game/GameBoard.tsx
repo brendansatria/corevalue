@@ -101,7 +101,7 @@ export function GameBoard({ layout, onStartGame, gameState, onScoreChange, onRou
 
     if (isComplete) {
       onRoundComplete(currentScore);
-    } else {
+    } else if (gameState === 'playing') {
       onScoreChange(currentScore);
     }
   }, [connectedTiles, flatLayout, onScoreChange, onRoundComplete, gameState]);
