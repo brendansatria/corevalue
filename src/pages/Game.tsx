@@ -40,7 +40,10 @@ const Game = () => {
         }}
       >
         {/* Timer */}
-        <div className="absolute top-[11.5%] left-[51%] w-[20%] h-[7%]">
+        <div
+          className="absolute w-[20%] h-[7%]"
+          style={{ top: '67.4px', left: '152.07px' }}
+        >
           <img src="/assets/game/header_background_timer.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
           <div className="relative w-full h-full flex items-center justify-center gap-1">
             <img src="/assets/game/header_icon_timer.png" alt="Timer" className="h-1/2 object-contain" />
@@ -51,7 +54,10 @@ const Game = () => {
         </div>
 
         {/* Score */}
-        <div className="absolute top-[11.5%] left-[74%] w-[20%] h-[7%]">
+        <div
+          className="absolute w-[20%] h-[7%]"
+          style={{ top: '67.4px', left: '260.25px' }}
+        >
           <img src="/assets/game/header_background_score.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
           <div className="relative w-full h-full flex items-center justify-center gap-1">
             <img src="/assets/game/header_icon_score.png" alt="Score" className="h-1/2 object-contain" />
