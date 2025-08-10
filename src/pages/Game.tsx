@@ -1,6 +1,6 @@
 import { GameBoard } from '@/components/game/GameBoard';
 import { gameRounds } from '@/data/gameData';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 
 const Game = () => {
   const [round, setRound] = useState(1);
@@ -23,6 +23,10 @@ const Game = () => {
       setGameState('playing');
     }
   };
+
+  const handleScoreChange = useCallback((newScore: number) => {
+    setScore(newScore);
+  }, []);
 
   useEffect(() => {
     if (gameState !== 'playing') return;
@@ -85,7 +89,12 @@ const Game = () => {
 
         {/* Game Board Overlay Container */}
         <div className="absolute top-[22.74%] left-[6.5%] w-[87%] h-[70%] flex justify-center">
-          <GameBoard layout={currentRoundData.layout} onStartGame={startGame} gameState={gameState} />
+          <GameBoard
+            layout={currentRoundData.layout}
+            onStartGame={startGame}
+            gameState={gameState}
+            onScoreChange={handleScoreChange}
+          />
         </div>
       </div>
     </div>

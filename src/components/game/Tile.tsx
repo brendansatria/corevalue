@@ -1,20 +1,16 @@
-import { useState, useEffect } from 'react';
 import { TileConfig } from '@/data/gameData';
 import { cn } from '@/lib/utils';
 
 interface TileProps {
   config: TileConfig;
   onStartGame: () => void;
+  onRotate: () => void;
   gameState: 'ready' | 'playing' | 'finished';
+  rotation: number;
+  isConnected: boolean;
 }
 
-export function Tile({ config, onStartGame, gameState }: TileProps) {
-  const [rotation, setRotation] = useState(config.initialRotation ?? 0);
-
-  useEffect(() => {
-    setRotation(config.initialRotation ?? 0);
-  }, [config]);
-
+export function Tile({ config, onStartGame, onRotate, gameState, rotation, isConnected }: TileProps) {
   if (config.type === 'empty') {
     return <div />;
   }
@@ -25,12 +21,14 @@ export function Tile({ config, onStartGame, gameState }: TileProps) {
   const isInteractive = (config.rotatable && isPathTile && gameState === 'playing') || (isStartTile && gameState === 'ready');
 
   const handleClick = () => {
-    if (config.rotatable && isPathTile && gameState === 'playing') {
-      setRotation((prev) => (prev + 90) % 360);
-    } else if (isStartTile && gameState === 'ready') {
+    if (isStartTile && gameState === 'ready') {
       onStartGame();
+    } else if (config.rotatable && isPathTile && gameState === 'playing') {
+      onRotate();
     }
   };
+
+  const imageSrc = isConnected && config.connectedAsset ? config.connectedAsset : config.asset;
 
   return (
     <div
@@ -41,7 +39,7 @@ export function Tile({ config, onStartGame, gameState }: TileProps) {
       onClick={handleClick}
     >
       <img
-        src={config.asset}
+        src={imageSrc}
         alt={config.type}
         className="w-full h-full object-contain transition-transform duration-200"
         style={{ transform: `rotate(${rotation}deg)` }}
