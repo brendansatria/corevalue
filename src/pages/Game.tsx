@@ -6,6 +6,7 @@ const Game = () => {
   const [round, setRound] = useState(1);
   const [timer, setTimer] = useState(30);
   const [score, setScore] = useState(0);
+  const [gameState, setGameState] = useState<'ready' | 'playing' | 'finished'>('ready');
 
   const currentRoundData = useMemo(() => {
     return gameRounds[round as keyof typeof gameRounds] || gameRounds[1];
@@ -17,16 +18,31 @@ const Game = () => {
       : '/assets/game/background_2_for_round_3_and_4.png';
   }, [round]);
 
+  const startGame = () => {
+    if (gameState === 'ready') {
+      setGameState('playing');
+    }
+  };
+
   useEffect(() => {
+    if (gameState !== 'playing') return;
+
     const interval = setInterval(() => {
-      setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+      setTimer((prev) => {
+        if (prev > 1) {
+          return prev - 1;
+        }
+        setGameState('finished');
+        return 0;
+      });
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [gameState]);
 
   useEffect(() => {
     setTimer(30);
     setScore(0);
+    setGameState('ready');
   }, [round]);
 
   return (
@@ -69,7 +85,7 @@ const Game = () => {
 
         {/* Game Board Overlay Container */}
         <div className="absolute top-[22.74%] left-[6.5%] w-[87%] h-[70%] flex justify-center">
-          <GameBoard layout={currentRoundData.layout} />
+          <GameBoard layout={currentRoundData.layout} onStartGame={startGame} gameState={gameState} />
         </div>
       </div>
     </div>

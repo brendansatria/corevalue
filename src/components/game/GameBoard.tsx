@@ -3,28 +3,28 @@ import { Tile } from './Tile';
 
 interface GameBoardProps {
   layout: TileConfig[][];
+  onStartGame: () => void;
+  gameState: 'ready' | 'playing' | 'finished';
 }
 
-export function GameBoard({ layout }: GameBoardProps) {
+export function GameBoard({ layout, onStartGame, gameState }: GameBoardProps) {
   if (!layout) {
     return null;
   }
 
   const rows = layout.length;
   
-  // Using inline styles to create a grid with fixed-size cells
-  // to match the requested tile dimensions.
   const gridStyle = {
     display: 'grid',
     gridTemplateColumns: 'repeat(5, 80.55px)',
     gridTemplateRows: `repeat(${rows}, 80.55px)`,
-    gap: '4px', // Corresponds to Tailwind's `gap-1`
+    gap: '4px',
   };
 
   return (
     <div style={gridStyle}>
       {layout.flat().map((tileConfig, index) => (
-        <Tile key={index} config={tileConfig} />
+        <Tile key={index} config={tileConfig} onStartGame={onStartGame} gameState={gameState} />
       ))}
     </div>
   );
