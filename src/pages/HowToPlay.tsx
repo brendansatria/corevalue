@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { MadeWithDyad } from "@/components/made-with-dyad";
 
 const HowToPlay = () => {
   const navigate = useNavigate();
@@ -50,9 +49,6 @@ const HowToPlay = () => {
             Next
           </Button>
         </div>
-      </div>
-      <div className="absolute bottom-4">
-        <MadeWithDyad />
       </div>
     </div>
   );
