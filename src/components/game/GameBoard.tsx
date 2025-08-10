@@ -9,18 +9,27 @@ interface GameBoardProps {
   gameState: 'ready' | 'playing' | 'finished';
   onScoreChange: (score: number) => void;
   onRoundComplete: (customerScore: number) => void;
+  connectedTiles: Set<number>;
+  onConnectedTilesChange: (tiles: Set<number>) => void;
 }
 
-export function GameBoard({ layout, onStartGame, gameState, onScoreChange, onRoundComplete }: GameBoardProps) {
+export function GameBoard({
+  layout,
+  onStartGame,
+  gameState,
+  onScoreChange,
+  onRoundComplete,
+  connectedTiles,
+  onConnectedTilesChange,
+}: GameBoardProps) {
   const [rotations, setRotations] = useState<number[]>([]);
-  const [connectedTiles, setConnectedTiles] = useState<Set<number>>(new Set());
   const flatLayout = layout.flat();
 
   useEffect(() => {
     const initialRotations = flatLayout.map(tile => tile.initialRotation ?? 0);
     setRotations(initialRotations);
-    setConnectedTiles(new Set());
-  }, [layout]);
+    onConnectedTilesChange(new Set());
+  }, [layout, onConnectedTilesChange]);
 
   const handleRotate = (index: number) => {
     const newRotations = [...rotations];
@@ -34,7 +43,7 @@ export function GameBoard({ layout, onStartGame, gameState, onScoreChange, onRou
     const startIndex = flatLayout.findIndex(tile => tile.type === 'start');
 
     if (startIndex === -1) {
-      setConnectedTiles(new Set());
+      onConnectedTilesChange(new Set());
       return;
     }
 
@@ -76,8 +85,8 @@ export function GameBoard({ layout, onStartGame, gameState, onScoreChange, onRou
         }
       }
     }
-    setConnectedTiles(visited);
-  }, [layout, rotations, flatLayout]);
+    onConnectedTilesChange(visited);
+  }, [layout, rotations, flatLayout, onConnectedTilesChange]);
 
   useEffect(() => {
     if (gameState === 'playing') {
@@ -86,6 +95,8 @@ export function GameBoard({ layout, onStartGame, gameState, onScoreChange, onRou
   }, [rotations, gameState, checkForConnections]);
 
   useEffect(() => {
+    if (gameState !== 'playing') return;
+
     let currentScore = 0;
     const totalCustomers = flatLayout.filter(tile => tile.type === 'customer').length;
     let connectedCustomers = 0;
@@ -97,11 +108,11 @@ export function GameBoard({ layout, onStartGame, gameState, onScoreChange, onRou
       }
     });
 
-    const isComplete = gameState === 'playing' && totalCustomers > 0 && connectedCustomers === totalCustomers;
+    const isComplete = totalCustomers > 0 && connectedCustomers === totalCustomers;
 
     if (isComplete) {
       onRoundComplete(currentScore);
-    } else if (gameState === 'playing') {
+    } else {
       onScoreChange(currentScore);
     }
   }, [connectedTiles, flatLayout, onScoreChange, onRoundComplete, gameState]);

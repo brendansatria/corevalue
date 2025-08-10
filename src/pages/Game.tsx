@@ -2,6 +2,7 @@ import { GameBoard } from '@/components/game/GameBoard';
 import { gameRounds } from '@/data/gameData';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { RoundCompleteDialog } from '@/components/game/RoundCompleteDialog';
+import { TimeUpDialog } from '@/components/game/TimeUpDialog';
 
 const Game = () => {
   const [round, setRound] = useState(1);
@@ -10,6 +11,9 @@ const Game = () => {
   const [gameState, setGameState] = useState<'ready' | 'playing' | 'finished'>('ready');
   const [isRoundComplete, setIsRoundComplete] = useState(false);
   const [bonusAwarded, setBonusAwarded] = useState(false);
+  const [isTimeUp, setIsTimeUp] = useState(false);
+  const [penalty, setPenalty] = useState(0);
+  const [connectedTiles, setConnectedTiles] = useState<Set<number>>(new Set());
 
   const currentRoundData = useMemo(() => {
     return gameRounds[round as keyof typeof gameRounds] || gameRounds[1];
@@ -62,11 +66,34 @@ const Game = () => {
   }, [gameState]);
 
   useEffect(() => {
+    if (gameState === 'finished' && !isRoundComplete) {
+      const flatLayout = currentRoundData.layout.flat();
+      let calculatedPenalty = 0;
+      flatLayout.forEach((tile, index) => {
+        if (tile.type === 'customer' && (tile.points ?? 0) > 5) {
+          if (!connectedTiles.has(index)) {
+            calculatedPenalty += 5;
+          }
+        }
+      });
+
+      if (calculatedPenalty > 0) {
+        setScore(prev => prev - calculatedPenalty);
+        setPenalty(calculatedPenalty);
+      }
+      setIsTimeUp(true);
+    }
+  }, [gameState, isRoundComplete, connectedTiles, currentRoundData.layout]);
+
+  useEffect(() => {
     setTimer(30);
     setScore(0);
     setGameState('ready');
     setIsRoundComplete(false);
     setBonusAwarded(false);
+    setIsTimeUp(false);
+    setPenalty(0);
+    setConnectedTiles(new Set());
   }, [round]);
 
   return (
@@ -115,6 +142,8 @@ const Game = () => {
             gameState={gameState}
             onScoreChange={handleScoreChange}
             onRoundComplete={handleRoundComplete}
+            connectedTiles={connectedTiles}
+            onConnectedTilesChange={setConnectedTiles}
           />
         </div>
       </div>
@@ -124,6 +153,13 @@ const Game = () => {
         onNextRound={handleNextRound}
         isLastRound={round === 4}
         bonusAwarded={bonusAwarded}
+      />
+      <TimeUpDialog
+        open={isTimeUp}
+        score={score}
+        penalty={penalty}
+        onNextRound={handleNextRound}
+        isLastRound={round === 4}
       />
     </div>
   );
