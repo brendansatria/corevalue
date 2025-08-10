@@ -9,6 +9,7 @@ const Game = () => {
   const [score, setScore] = useState(0);
   const [gameState, setGameState] = useState<'ready' | 'playing' | 'finished'>('ready');
   const [isRoundComplete, setIsRoundComplete] = useState(false);
+  const [bonusAwarded, setBonusAwarded] = useState(false);
 
   const currentRoundData = useMemo(() => {
     return gameRounds[round as keyof typeof gameRounds] || gameRounds[1];
@@ -34,6 +35,8 @@ const Game = () => {
     if (gameState === 'playing') {
       setGameState('finished');
       setIsRoundComplete(true);
+      setScore(prev => prev + 10);
+      setBonusAwarded(true);
     }
   }, [gameState]);
 
@@ -63,6 +66,7 @@ const Game = () => {
     setScore(0);
     setGameState('ready');
     setIsRoundComplete(false);
+    setBonusAwarded(false);
   }, [round]);
 
   return (
@@ -119,6 +123,7 @@ const Game = () => {
         score={score}
         onNextRound={handleNextRound}
         isLastRound={round === 4}
+        bonusAwarded={bonusAwarded}
       />
     </div>
   );

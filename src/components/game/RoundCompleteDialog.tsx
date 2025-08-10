@@ -14,9 +14,10 @@ interface RoundCompleteDialogProps {
   score: number;
   onNextRound: () => void;
   isLastRound: boolean;
+  bonusAwarded: boolean;
 }
 
-export function RoundCompleteDialog({ open, score, onNextRound, isLastRound }: RoundCompleteDialogProps) {
+export function RoundCompleteDialog({ open, score, onNextRound, isLastRound, bonusAwarded }: RoundCompleteDialogProps) {
   const navigate = useNavigate();
 
   const handleAction = () => {
@@ -34,8 +35,14 @@ export function RoundCompleteDialog({ open, score, onNextRound, isLastRound }: R
           <AlertDialogTitle>{isLastRound ? "Game Finished!" : "Round Complete!"}</AlertDialogTitle>
           <AlertDialogDescription>
             You successfully connected all customers!
+            {bonusAwarded && (
+              <>
+                <br />
+                You've earned a <span className="font-bold">+10 point</span> completion bonus!
+              </>
+            )}
             <br />
-            Your score for this round is: <span className="font-bold">{score}</span>
+            Your total score for this round is: <span className="font-bold">{score}</span>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
