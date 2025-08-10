@@ -44,10 +44,15 @@ const Game = () => {
   }, [round]);
 
   const gameBg = useMemo(() => {
+    if (gameState === 'ready') {
+      return round < 3
+        ? '/assets/game/background_1.png'
+        : '/assets/game/background_2.png';
+    }
     return round < 3
       ? '/assets/game/background_1_for_round_1_and_2.png'
       : '/assets/game/background_2_for_round_3_and_4.png';
-  }, [round]);
+  }, [round, gameState]);
 
   const startGame = () => {
     if (gameState === 'ready') {
@@ -126,32 +131,36 @@ const Game = () => {
         }}
       >
         {/* Timer */}
-        <div
-          className="absolute w-[20%] h-[7%]"
-          style={{ top: '68.5px', left: '160px' }}
-        >
-          <img src="/assets/game/header_background_timer.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
-          <div className="relative w-full h-full flex items-center justify-center gap-1">
-            <img src="/assets/game/header_icon_timer.png" alt="Timer" className="object-contain" style={{ height: '35.6px' }} />
-            <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
-              {String(timer).padStart(2, '0')}
-            </span>
-          </div>
-        </div>
+        {gameState !== 'ready' && (
+          <>
+            <div
+              className="absolute w-[20%] h-[7%]"
+              style={{ top: '68.5px', left: '160px' }}
+            >
+              <img src="/assets/game/header_background_timer.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
+              <div className="relative w-full h-full flex items-center justify-center gap-1">
+                <img src="/assets/game/header_icon_timer.png" alt="Timer" className="object-contain" style={{ height: '35.6px' }} />
+                <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
+                  {String(timer).padStart(2, '0')}
+                </span>
+              </div>
+            </div>
 
-        {/* Score */}
-        <div
-          className="absolute w-[20%] h-[7%]"
-          style={{ top: '68.5px', left: '301px' }}
-        >
-          <img src="/assets/game/header_background_score.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
-          <div className="relative w-full h-full flex items-center justify-center gap-1">
-            <img src="/assets/game/header_icon_score.png" alt="Score" className="object-contain" style={{ height: '35.6px' }} />
-            <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
-              {String(score).padStart(2, '0')}
-            </span>
-          </div>
-        </div>
+            {/* Score */}
+            <div
+              className="absolute w-[20%] h-[7%]"
+              style={{ top: '68.5px', left: '301px' }}
+            >
+              <img src="/assets/game/header_background_score.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
+              <div className="relative w-full h-full flex items-center justify-center gap-1">
+                <img src="/assets/game/header_icon_score.png" alt="Score" className="object-contain" style={{ height: '35.6px' }} />
+                <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
+                  {String(score).padStart(2, '0')}
+                </span>
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Game Board Overlay Container */}
         <div className="absolute top-[22.74%] left-[6.5%] w-[87%] h-[70%] flex justify-center">
