@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { useGame } from '@/context/GameContext';
 import { caseStudies, CoreValue } from '@/data/caseStudyData';
 import { CaseStudyResultDialog } from '@/components/game/CaseStudyResultDialog';
-import { Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const CaseStudy = () => {
@@ -90,22 +89,17 @@ const CaseStudy = () => {
           backgroundImage: `url('/assets/game/background_phase_2.png')`,
         }}
       >
-        {/* Score Display */}
-        <div className="absolute top-[20px] left-0 right-0 px-6 flex items-center justify-end gap-4">
-            {/* CP Score */}
-            <div className="flex items-center gap-2 bg-gray-800 bg-opacity-70 rounded-full px-3 py-1">
-                <Heart size={24} className="text-red-400" />
-                <span className="font-roboto text-white font-bold text-xl">{totalSatisfaction}</span>
-            </div>
-            {/* RP Score */}
-            <div className="flex items-center gap-2 bg-gray-800 bg-opacity-70 rounded-full px-3 py-1">
-                <img src="/assets/game/header_icon_score.png" alt="RP" className="h-6" />
-                <span className="font-roboto text-white font-bold text-xl">{totalRevenue}</span>
-            </div>
+        {/* CP Score */}
+        <div className="absolute w-[100px] text-center" style={{ top: '102px', left: '85px' }}>
+            <span className="font-roboto text-white font-bold text-2xl drop-shadow-lg">{totalSatisfaction}</span>
+        </div>
+        {/* RP Score */}
+        <div className="absolute w-[100px] text-center" style={{ top: '102px', right: '85px' }}>
+            <span className="font-roboto text-white font-bold text-2xl drop-shadow-lg">{totalRevenue}</span>
         </div>
 
         {/* Narrative Box */}
-        <div className="absolute top-[80px] left-6 right-6 h-[350px] bg-white bg-opacity-90 rounded-lg p-4 overflow-y-auto shadow-inner">
+        <div className="absolute left-6 right-6 bg-white bg-opacity-90 rounded-lg p-4 overflow-y-auto shadow-inner" style={{ top: '22.74%', height: '280px' }}>
             <p className="text-gray-800 text-lg whitespace-pre-wrap">{narrative}</p>
         </div>
 
