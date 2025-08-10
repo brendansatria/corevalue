@@ -45,7 +45,7 @@ export function GameBoard({ layout, onStartGame, gameState, onScoreChange }: Gam
       const currentCol = currentIndex % cols;
       const currentTile = flatLayout[currentIndex];
       const currentRotation = rotations[currentIndex];
-      const currentConnections = getConnections(currentTile.asset!, currentRotation);
+      const currentConnections = getConnections(currentTile.asset!, currentRotation, currentTile.type, currentRow, currentCol);
 
       const neighbors = [
         { dir: 'top', r: -1, c: 0, opposite: 'bottom' },
@@ -64,7 +64,7 @@ export function GameBoard({ layout, onStartGame, gameState, onScoreChange }: Gam
             const neighborTile = flatLayout[neighborIndex];
             if (neighborTile.type !== 'empty') {
               const neighborRotation = rotations[neighborIndex];
-              const neighborConnections = getConnections(neighborTile.asset!, neighborRotation);
+              const neighborConnections = getConnections(neighborTile.asset!, neighborRotation, neighborTile.type, neighborRow, neighborCol);
               if (neighborConnections.includes(opposite)) {
                 visited.add(neighborIndex);
                 queue.push(neighborIndex);
