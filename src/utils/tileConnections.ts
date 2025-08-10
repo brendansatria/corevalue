@@ -5,7 +5,7 @@ const connections: Record<string, string[]> = {
   '/assets/game/T_path_tile.png': ['bottom', 'left', 'right'],
   
   // Fixed Path Tiles (not rotatable)
-  '/assets/game/L_path_fix__tile_for_round_2.png': ['right', 'bottom'],
+  '/assets/game/L_path_fix__tile_for_round_2.png': ['left', 'bottom'],
   '/assets/game/T_path_fix__tile_for_round_3.png': ['left', 'top', 'right'],
 
   // Start Tile
