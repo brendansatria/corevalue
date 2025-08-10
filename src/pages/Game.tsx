@@ -21,6 +21,24 @@ const Game = () => {
   const [penalty, setPenalty] = useState(0);
   const [connectedTiles, setConnectedTiles] = useState<Set<number>>(new Set());
 
+  useEffect(() => {
+    const newRound = location.state?.round || 1;
+    const newTimeLimit = location.state?.timeLimit || 30;
+    const newInitialPenalty = location.state?.initialPenalty || 0;
+
+    setRound(newRound);
+    setTimer(newTimeLimit);
+    setInitialPenalty(newInitialPenalty);
+    
+    setScore(0);
+    setGameState('ready');
+    setIsRoundComplete(false);
+    setBonusAwarded(false);
+    setIsTimeUp(false);
+    setPenalty(0);
+    setConnectedTiles(new Set());
+  }, [location.state]);
+
   const currentRoundData = useMemo(() => {
     return gameRounds[round as keyof typeof gameRounds] || gameRounds[1];
   }, [round]);
