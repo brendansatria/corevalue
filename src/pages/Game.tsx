@@ -50,7 +50,7 @@ const Game = () => {
         </div>
 
         {/* Game Board Overlay Container */}
-        <div className="absolute top-[22.74%] left-[6.5%] w-[87%] h-[70%] flex items-center justify-center">
+        <div className="absolute top-[22.74%] left-[6.5%] w-[87%] h-[70%] flex justify-center">
           <GameBoard layout={currentRoundData.layout} />
         </div>
       </div>
