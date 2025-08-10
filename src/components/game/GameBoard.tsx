@@ -7,6 +7,11 @@ interface GameBoardProps {
 }
 
 export function GameBoard({ layout }: GameBoardProps) {
+  // Add a guard clause to prevent crash if layout is not yet available.
+  if (!layout) {
+    return null;
+  }
+
   const rows = layout.length;
   const gridClasses = rows === 6 ? 'grid-rows-6' : 'grid-rows-5';
 
