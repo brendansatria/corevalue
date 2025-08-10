@@ -90,7 +90,7 @@ const CaseStudy = () => {
         }}
       >
         {/* CP Score */}
-        <div className="absolute flex items-center justify-center w-[20%] h-[7%]" style={{ top: '68.5px', left: '170px' }}>
+        <div className="absolute flex items-center justify-center w-[20%] h-[7%]" style={{ top: '68.5px', left: '172.5px' }}>
             <span className="font-roboto text-white font-bold drop-shadow-lg" style={{ fontSize: '35.6px', lineHeight: '1' }}>{totalSatisfaction}</span>
         </div>
         {/* RP Score */}
@@ -101,6 +101,7 @@ const CaseStudy = () => {
         {/* Narrative Box */}
         <div className="absolute left-6 right-6 bg-white bg-opacity-90 rounded-lg p-4 overflow-y-auto shadow-inner" style={{ top: '22.74%', height: '285px' }}>
             <p className="text-gray-800 text-lg whitespace-pre-wrap">{narrative}</p>
+            <p className="text-gray-800 text-lg mt-4">Berdasarkan case study di atas, core value apa yang dilakukan oleh Kang Kredit?</p>
         </div>
 
         {/* Answer Options */}
