@@ -12,7 +12,7 @@ const GameContext = createContext<GameContextState | undefined>(undefined);
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [totalRevenue, setTotalRevenue] = useState(0);
-  const [totalSatisfaction, setTotalSatisfaction] = useState(0);
+  const [totalSatisfaction, setTotalSatisfaction] = useState(50);
 
   const updateRevenue = (amount: number) => {
     setTotalRevenue(prev => prev + amount);
@@ -24,7 +24,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   const resetScores = () => {
     setTotalRevenue(0);
-    setTotalSatisfaction(0);
+    setTotalSatisfaction(50);
   }
 
   return (
