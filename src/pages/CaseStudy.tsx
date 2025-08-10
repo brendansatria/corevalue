@@ -90,11 +90,11 @@ const CaseStudy = () => {
         }}
       >
         {/* CP Score */}
-        <div className="absolute flex items-center justify-center w-[20%] h-[7%]" style={{ top: '68.5px', left: '163px' }}>
+        <div className="absolute flex items-center justify-center w-[20%] h-[7%]" style={{ top: '68.5px', left: '166px' }}>
             <span className="font-roboto text-white font-bold drop-shadow-lg" style={{ fontSize: '35.6px', lineHeight: '1' }}>{totalSatisfaction}</span>
         </div>
         {/* RP Score */}
-        <div className="absolute flex items-center justify-center w-[20%] h-[7%]" style={{ top: '68.5px', left: '309px' }}>
+        <div className="absolute flex items-center justify-center w-[20%] h-[7%]" style={{ top: '68.5px', left: '312px' }}>
             <span className="font-roboto text-white font-bold drop-shadow-lg" style={{ fontSize: '35.6px', lineHeight: '1' }}>{totalRevenue}</span>
         </div>
 
