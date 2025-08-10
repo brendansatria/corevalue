@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TileConfig } from '@/data/gameData';
 import { cn } from '@/lib/utils';
 
@@ -8,6 +8,10 @@ interface TileProps {
 
 export function Tile({ config }: TileProps) {
   const [rotation, setRotation] = useState(config.initialRotation ?? 0);
+
+  useEffect(() => {
+    setRotation(config.initialRotation ?? 0);
+  }, [config]);
 
   const isInteractive = config.rotatable && config.type === 'path';
 

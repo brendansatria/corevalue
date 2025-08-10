@@ -1,9 +1,16 @@
 import { GameBoard } from '@/components/game/GameBoard';
-import { useState, useEffect } from 'react';
+import { gameRounds } from '@/data/gameData';
+import { useState, useEffect, useMemo } from 'react';
+import { Button } from '@/components/ui/button';
 
 const Game = () => {
+  const [round, setRound] = useState(1);
   const [timer, setTimer] = useState(30);
   const [score, setScore] = useState(0);
+
+  const currentRoundData = useMemo(() => {
+    return gameRounds[round as keyof typeof gameRounds] || gameRounds[1];
+  }, [round]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -12,14 +19,20 @@ const Game = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Reset timer and score when round changes
+  useEffect(() => {
+    setTimer(30);
+    setScore(0);
+  }, [round]);
+
   return (
-    <div className="w-full min-h-screen bg-gray-800 flex items-center justify-center p-4">
+    <div className="w-full min-h-screen bg-gray-800 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-[450px] mx-auto">
         <div
-          className="relative w-full bg-contain bg-no-repeat bg-center"
+          className="relative w-full bg-contain bg-no-repeat bg-center transition-all duration-500"
           style={{
-            backgroundImage: "url('/assets/game/board_3x3.png')",
-            paddingTop: '142%', // Aspect ratio of the background image
+            backgroundImage: `url('${currentRoundData.boardImage}')`,
+            paddingTop: currentRoundData.boardAspectRatio,
           }}
         >
           {/* Timer */}
@@ -32,9 +45,24 @@ const Game = () => {
           </div>
           {/* Game Board */}
           <div className="absolute" style={{ top: '18%', bottom: '4%', left: '6%', right: '6%' }}>
-            <GameBoard />
+            <GameBoard layout={currentRoundData.layout} />
           </div>
         </div>
+      </div>
+      {/* Round switcher for testing */}
+      <div className="flex gap-2 mt-4">
+        <Button onClick={() => setRound(1)} disabled={round === 1}>
+          Round 1
+        </Button>
+        <Button onClick={() => setRound(2)} disabled={round === 2}>
+          Round 2
+        </Button>
+        <Button onClick={() => setRound(3)} disabled={round === 3}>
+          Round 3
+        </Button>
+        <Button onClick={() => setRound(4)} disabled={round === 4}>
+          Round 4
+        </Button>
       </div>
     </div>
   );

@@ -1,10 +1,23 @@
-import { round1Layout } from '@/data/gameData';
+import { TileConfig } from '@/data/gameData';
 import { Tile } from './Tile';
+import { cn } from '@/lib/utils';
 
-export function GameBoard() {
+interface GameBoardProps {
+  layout: TileConfig[][];
+}
+
+export function GameBoard({ layout }: GameBoardProps) {
+  const rows = layout.length;
+  const gridClasses = rows === 6 ? 'grid-rows-6' : 'grid-rows-5';
+
   return (
-    <div className="grid grid-cols-5 grid-rows-5 gap-1 w-full h-full">
-      {round1Layout.flat().map((tileConfig, index) => (
+    <div
+      className={cn(
+        'grid grid-cols-5 gap-1 w-full h-full',
+        gridClasses
+      )}
+    >
+      {layout.flat().map((tileConfig, index) => (
         <Tile key={index} config={tileConfig} />
       ))}
     </div>
