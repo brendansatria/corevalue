@@ -56,7 +56,7 @@ const Game = () => {
         {/* Score */}
         <div
           className="absolute w-[20%] h-[7%]"
-          style={{ top: '67.4px', left: '260.25px' }}
+          style={{ top: '67.4px', left: '294.18px' }}
         >
           <img src="/assets/game/header_background_score.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
           <div className="relative w-full h-full flex items-center justify-center gap-1">
