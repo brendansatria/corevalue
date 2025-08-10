@@ -2,6 +2,7 @@ import { GameBoard } from '@/components/game/GameBoard';
 import { gameRounds } from '@/data/gameData';
 import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const Game = () => {
   const [round, setRound] = useState(1);
@@ -56,11 +57,16 @@ const Game = () => {
         </div>
       </header>
 
-      <main
-        className="w-full max-w-[450px] sm:max-w-[550px] bg-contain bg-no-repeat bg-center p-[5%]"
-        style={{ backgroundImage: `url('${boardBg}')` }}
-      >
-        <GameBoard layout={currentRoundData.layout} />
+      <main className="w-full max-w-[450px] sm:max-w-[550px]">
+        <AspectRatio 
+          ratio={1 / 1} 
+          className="bg-contain bg-no-repeat bg-center"
+          style={{ backgroundImage: `url('${boardBg}')` }}
+        >
+          <div className="w-full h-full p-[8%] flex items-center justify-center">
+            <GameBoard layout={currentRoundData.layout} />
+          </div>
+        </AspectRatio>
       </main>
 
       <div className="flex gap-2 mt-4">
