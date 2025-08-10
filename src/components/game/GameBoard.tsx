@@ -8,9 +8,10 @@ interface GameBoardProps {
   onStartGame: () => void;
   gameState: 'ready' | 'playing' | 'finished';
   onScoreChange: (score: number) => void;
+  onRoundComplete: () => void;
 }
 
-export function GameBoard({ layout, onStartGame, gameState, onScoreChange }: GameBoardProps) {
+export function GameBoard({ layout, onStartGame, gameState, onScoreChange, onRoundComplete }: GameBoardProps) {
   const [rotations, setRotations] = useState<number[]>([]);
   const [connectedTiles, setConnectedTiles] = useState<Set<number>>(new Set());
   const flatLayout = layout.flat();
@@ -18,6 +19,7 @@ export function GameBoard({ layout, onStartGame, gameState, onScoreChange }: Gam
   useEffect(() => {
     const initialRotations = flatLayout.map(tile => tile.initialRotation ?? 0);
     setRotations(initialRotations);
+    setConnectedTiles(new Set());
   }, [layout]);
 
   const handleRotate = (index: number) => {
@@ -80,20 +82,26 @@ export function GameBoard({ layout, onStartGame, gameState, onScoreChange }: Gam
   useEffect(() => {
     if (gameState === 'playing') {
       checkForConnections();
-    } else {
-      setConnectedTiles(new Set());
     }
   }, [rotations, gameState, checkForConnections]);
 
   useEffect(() => {
     let currentScore = 0;
+    const totalCustomers = flatLayout.filter(tile => tile.type === 'customer').length;
+    let connectedCustomers = 0;
+
     flatLayout.forEach((tile, index) => {
       if (tile.type === 'customer' && connectedTiles.has(index)) {
         currentScore += tile.points ?? 0;
+        connectedCustomers++;
       }
     });
     onScoreChange(currentScore);
-  }, [connectedTiles, flatLayout, onScoreChange]);
+
+    if (gameState === 'playing' && totalCustomers > 0 && connectedCustomers === totalCustomers) {
+      onRoundComplete();
+    }
+  }, [connectedTiles, flatLayout, onScoreChange, onRoundComplete, gameState]);
 
   if (!layout || rotations.length === 0) {
     return null;

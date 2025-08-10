@@ -1,12 +1,14 @@
 import { GameBoard } from '@/components/game/GameBoard';
 import { gameRounds } from '@/data/gameData';
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { RoundCompleteDialog } from '@/components/game/RoundCompleteDialog';
 
 const Game = () => {
   const [round, setRound] = useState(1);
   const [timer, setTimer] = useState(30);
   const [score, setScore] = useState(0);
   const [gameState, setGameState] = useState<'ready' | 'playing' | 'finished'>('ready');
+  const [isRoundComplete, setIsRoundComplete] = useState(false);
 
   const currentRoundData = useMemo(() => {
     return gameRounds[round as keyof typeof gameRounds] || gameRounds[1];
@@ -28,6 +30,19 @@ const Game = () => {
     setScore(newScore);
   }, []);
 
+  const handleRoundComplete = useCallback(() => {
+    if (gameState === 'playing') {
+      setGameState('finished');
+      setIsRoundComplete(true);
+    }
+  }, [gameState]);
+
+  const handleNextRound = () => {
+    if (round < 4) {
+      setRound(prev => prev + 1);
+    }
+  };
+
   useEffect(() => {
     if (gameState !== 'playing') return;
 
@@ -47,6 +62,7 @@ const Game = () => {
     setTimer(30);
     setScore(0);
     setGameState('ready');
+    setIsRoundComplete(false);
   }, [round]);
 
   return (
@@ -94,9 +110,16 @@ const Game = () => {
             onStartGame={startGame}
             gameState={gameState}
             onScoreChange={handleScoreChange}
+            onRoundComplete={handleRoundComplete}
           />
         </div>
       </div>
+      <RoundCompleteDialog
+        open={isRoundComplete}
+        score={score}
+        onNextRound={handleNextRound}
+        isLastRound={round === 4}
+      />
     </div>
   );
 };
