@@ -70,14 +70,7 @@ const CaseStudy = () => {
   };
 
   const handleContinue = () => {
-    const nextRound = round + 1;
-    if (nextRound > 4) {
-      navigate('/'); // Game finished, go to home
-    } else if (nextRound === 2 || nextRound === 4) {
-      navigate(`/challenge/${nextRound}`);
-    } else {
-      navigate('/game', { state: { round: nextRound, timeLimit: 30, initialPenalty: 0 } });
-    }
+    navigate('/phase-3-scoring', { state: { round: round } });
   };
 
   return (
