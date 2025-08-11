@@ -86,7 +86,7 @@ const CaseStudy = () => {
         {showPhaseIntro ? (
           <PhaseIntro
             phaseNumber={2}
-            phaseTitle="Making Decisions"
+            phaseTitle="Case Study"
             roundNumber={round}
             onComplete={() => setShowPhaseIntro(false)}
           />
