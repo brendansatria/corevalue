@@ -28,10 +28,15 @@ const GameInstructions = () => {
             </p>
           </div>
           <div className="border-t pt-6">
-            <h3 className="text-2xl font-semibold mb-2 text-center">Phase 3: Challenge Rounds (Rounds 2 & 4)</h3>
+            <h3 className="text-2xl font-semibold mb-2 text-center">Phase 3: Scoring & Challenges</h3>
             <p>
-              Before starting rounds 2 and 4, you'll face a challenge. You can choose to have more time to solve the puzzle, but it will come at the cost of an initial RP penalty.
+              Your performance is measured in two ways: Revenue Points (RP) and Customer Points (CP).
             </p>
+            <ul className="list-disc list-inside space-y-2 pl-4 mt-2">
+              <li><span className="font-bold">RP</span> is gained from connecting customers and making good business decisions.</li>
+              <li><span className="font-bold">CP</span> is gained by aligning with core values in the case studies.</li>
+              <li>In <span className="font-bold">Challenge Rounds (2 & 4)</span>, you can opt for more time on the puzzle, but it will cost you some initial RP.</li>
+            </ul>
           </div>
         </CardContent>
         <div className="p-6 pt-2">
