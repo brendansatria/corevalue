@@ -13,6 +13,7 @@ import { GameProvider } from "./context/GameContext";
 import GameInstructions from "./pages/GameInstructions";
 import Phase1Intro from "./pages/Phase1Intro";
 import Phase3Scoring from "./pages/Phase3Scoring";
+import FinalScore from "./pages/FinalScore";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/challenge/:round" element={<Challenge />} />
             <Route path="/case-study" element={<CaseStudy />} />
             <Route path="/phase-3-scoring" element={<Phase3Scoring />} />
+            <Route path="/final-score" element={<FinalScore />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

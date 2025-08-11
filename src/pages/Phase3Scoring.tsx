@@ -13,7 +13,7 @@ const Phase3Scoring = () => {
     const timer = setTimeout(() => {
       const nextRound = round + 1;
       if (nextRound > 4) {
-        navigate('/'); // Game finished, go to home
+        navigate('/final-score'); // Game finished, go to final score
       } else if (nextRound === 2 || nextRound === 4) {
         navigate(`/challenge/${nextRound}`);
       } else {

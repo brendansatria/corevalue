@@ -52,6 +52,8 @@ const Game = () => {
     return gameRounds[round as keyof typeof gameRounds] || gameRounds[1];
   }, [round]);
 
+  const isLastRound = round === 4;
+
   const gameBg = useMemo(() => {
     if (gameState === 'ready' && !showPhaseIntro) {
       return round < 3
@@ -184,7 +186,7 @@ const Game = () => {
         open={isRoundComplete}
         score={score}
         onNextRound={() => handleNext(score)}
-        isLastRound={false}
+        isLastRound={isLastRound}
         bonusAwarded={bonusAwarded}
         initialPenalty={initialPenalty}
       />
@@ -193,7 +195,7 @@ const Game = () => {
         score={score}
         penalty={penalty}
         onNextRound={() => handleNext(score)}
-        isLastRound={false}
+        isLastRound={isLastRound}
         initialPenalty={initialPenalty}
       />
     </div>
