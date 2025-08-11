@@ -17,6 +17,7 @@ const Phase1Intro = () => {
         <PhaseIntro
           phaseNumber={1}
           phaseTitle="Connecting Customers"
+          roundNumber={1}
           onComplete={() => navigate('/how-to-play')}
         />
       </div>

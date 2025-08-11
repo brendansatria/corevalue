@@ -87,6 +87,7 @@ const CaseStudy = () => {
           <PhaseIntro
             phaseNumber={2}
             phaseTitle="Making Decisions"
+            roundNumber={round}
             onComplete={() => setShowPhaseIntro(false)}
           />
         ) : (

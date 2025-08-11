@@ -35,6 +35,7 @@ const Phase3Scoring = () => {
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center z-50 animate-fade-in">
+          <p className="text-white text-2xl mb-2 drop-shadow-lg">Round {round}</p>
           <h1 className="text-white text-5xl font-bold drop-shadow-lg">Phase 3</h1>
           <p className="text-white text-3xl mt-4 drop-shadow-lg">Scoring</p>
 

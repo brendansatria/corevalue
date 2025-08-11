@@ -7,9 +7,9 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Tukang Kredit Panci Keliling</h1>
+        <h1 className="text-4xl font-bold mb-4">Kang Kredit Keliling</h1>
         <p className="text-xl text-gray-600 mb-8">
-          A mini-game prototype.
+          dari panci hingga daster berpita, semua ada - cuma buat pelanggan tercinta
         </p>
         <Button size="lg" onClick={() => navigate('/game-instructions')}>
           Start Game
