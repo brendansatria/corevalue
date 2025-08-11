@@ -5,6 +5,7 @@ import { RoundCompleteDialog } from '@/components/game/RoundCompleteDialog';
 import { TimeUpDialog } from '@/components/game/TimeUpDialog';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useGame } from '@/context/GameContext';
+import { PhaseIntro } from '@/components/game/PhaseIntro';
 
 const Game = () => {
   const location = useLocation();
@@ -22,6 +23,7 @@ const Game = () => {
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [penalty, setPenalty] = useState(0);
   const [connectedTiles, setConnectedTiles] = useState<Set<number>>(new Set());
+  const [showPhaseIntro, setShowPhaseIntro] = useState(true);
 
   useEffect(() => {
     if (location.state?.round === 1) {
@@ -43,6 +45,7 @@ const Game = () => {
     setIsTimeUp(false);
     setPenalty(0);
     setConnectedTiles(new Set());
+    setShowPhaseIntro(true); // Show intro for every new round
   }, [location.state, resetScores]);
 
   const currentRoundData = useMemo(() => {
@@ -50,7 +53,7 @@ const Game = () => {
   }, [round]);
 
   const gameBg = useMemo(() => {
-    if (gameState === 'ready') {
+    if (gameState === 'ready' && !showPhaseIntro) {
       return round < 3
         ? '/assets/game/background_1.png'
         : '/assets/game/background_2.png';
@@ -58,7 +61,7 @@ const Game = () => {
     return round < 3
       ? '/assets/game/background_1_for_round_1_and_2.png'
       : '/assets/game/background_2_for_round_3_and_4.png';
-  }, [round, gameState]);
+  }, [round, gameState, showPhaseIntro]);
 
   const startGame = () => {
     if (gameState === 'ready') {
@@ -126,46 +129,56 @@ const Game = () => {
           backgroundImage: `url('${gameBg}')`,
         }}
       >
-        {/* Timer */}
-        <div
-          className="absolute w-[20%] h-[7%]"
-          style={{ top: '68.5px', left: '160px' }}
-        >
-          <img src="/assets/game/header_background_timer.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
-          <div className="relative w-full h-full flex items-center justify-center gap-1">
-            <img src="/assets/game/header_icon_timer.png" alt="Timer" className="object-contain" style={{ height: '35.6px' }} />
-            <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
-              {String(timer).padStart(2, '0')}
-            </span>
-          </div>
-        </div>
-
-        {/* Score */}
-        <div
-          className="absolute w-[20%] h-[7%]"
-          style={{ top: '68.5px', left: '301px' }}
-        >
-          <img src="/assets/game/header_background_score.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
-          <div className="relative w-full h-full flex items-center justify-center gap-1">
-            <img src="/assets/game/header_icon_score.png" alt="Score" className="object-contain" style={{ height: '35.6px' }} />
-            <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
-              {String(score).padStart(2, '0')}
-            </span>
-          </div>
-        </div>
-
-        {/* Game Board Overlay Container */}
-        <div className="absolute top-[22.74%] left-[6.5%] w-[87%] h-[70%] flex justify-center">
-          <GameBoard
-            layout={currentRoundData.layout}
-            onStartGame={startGame}
-            gameState={gameState}
-            onScoreChange={handleScoreChange}
-            onRoundComplete={handleRoundComplete}
-            connectedTiles={connectedTiles}
-            onConnectedTilesChange={setConnectedTiles}
+        {showPhaseIntro ? (
+          <PhaseIntro
+            phaseNumber={1}
+            phaseTitle="Connecting Customers"
+            onComplete={() => setShowPhaseIntro(false)}
           />
-        </div>
+        ) : (
+          <>
+            {/* Timer */}
+            <div
+              className="absolute w-[20%] h-[7%]"
+              style={{ top: '68.5px', left: '160px' }}
+            >
+              <img src="/assets/game/header_background_timer.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
+              <div className="relative w-full h-full flex items-center justify-center gap-1">
+                <img src="/assets/game/header_icon_timer.png" alt="Timer" className="object-contain" style={{ height: '35.6px' }} />
+                <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
+                  {String(timer).padStart(2, '0')}
+                </span>
+              </div>
+            </div>
+
+            {/* Score */}
+            <div
+              className="absolute w-[20%] h-[7%]"
+              style={{ top: '68.5px', left: '301px' }}
+            >
+              <img src="/assets/game/header_background_score.png" alt="" className="absolute inset-0 w-full h-full object-contain" />
+              <div className="relative w-full h-full flex items-center justify-center gap-1">
+                <img src="/assets/game/header_icon_score.png" alt="Score" className="object-contain" style={{ height: '35.6px' }} />
+                <span className="font-roboto text-white font-bold" style={{ fontSize: '35.6px', lineHeight: '1' }}>
+                  {String(score).padStart(2, '0')}
+                </span>
+              </div>
+            </div>
+
+            {/* Game Board Overlay Container */}
+            <div className="absolute top-[22.74%] left-[6.5%] w-[87%] h-[70%] flex justify-center">
+              <GameBoard
+                layout={currentRoundData.layout}
+                onStartGame={startGame}
+                gameState={gameState}
+                onScoreChange={handleScoreChange}
+                onRoundComplete={handleRoundComplete}
+                connectedTiles={connectedTiles}
+                onConnectedTilesChange={setConnectedTiles}
+              />
+            </div>
+          </>
+        )}
       </div>
       <RoundCompleteDialog
         open={isRoundComplete}

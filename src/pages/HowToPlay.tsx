@@ -7,7 +7,7 @@ const HowToPlay = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       <div className="text-center bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6">How to Play</h1>
+        <h1 className="text-4xl font-bold mb-6">How to Play Mini-Game</h1>
         <div className="text-left text-lg text-gray-700 space-y-4">
           <p>
             Your goal is to connect the starting point to as many customers as possible by rotating the path tiles.
