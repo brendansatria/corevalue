@@ -10,6 +10,7 @@ import HowToPlay from "./pages/HowToPlay";
 import Challenge from "./pages/Challenge";
 import CaseStudy from "./pages/CaseStudy";
 import { GameProvider } from "./context/GameContext";
+import GameInstructions from "./pages/GameInstructions";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/game-instructions" element={<GameInstructions />} />
             <Route path="/how-to-play" element={<HowToPlay />} />
             <Route path="/game" element={<Game />} />
             <Route path="/challenge/:round" element={<Challenge />} />

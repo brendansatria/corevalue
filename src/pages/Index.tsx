@@ -11,7 +11,7 @@ const Index = () => {
         <p className="text-xl text-gray-600 mb-8">
           A mini-game prototype.
         </p>
-        <Button size="lg" onClick={() => navigate('/how-to-play')}>
+        <Button size="lg" onClick={() => navigate('/game-instructions')}>
           Start Game
         </Button>
       </div>
