@@ -45,7 +45,7 @@ const Game = () => {
     setIsTimeUp(false);
     setPenalty(0);
     setConnectedTiles(new Set());
-    setShowPhaseIntro(true); // Show intro for every new round
+    setShowPhaseIntro(!location.state?.introShown);
   }, [location.state, resetScores]);
 
   const currentRoundData = useMemo(() => {

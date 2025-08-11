@@ -49,7 +49,7 @@ const GameInstructions = () => {
           </div>
         </CardContent>
         <div className="p-6 pt-2">
-          <Button size="lg" onClick={() => navigate('/how-to-play')} className="mt-4 w-full max-w-xs mx-auto">
+          <Button size="lg" onClick={() => navigate('/phase-1-intro')} className="mt-4 w-full max-w-xs mx-auto">
             Continue
           </Button>
         </div>

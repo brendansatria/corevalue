@@ -45,7 +45,7 @@ const HowToPlay = () => {
           <p className="font-bold text-center pt-8">Good luck!</p>
         </div>
         <div className="mt-8">
-          <Button size="lg" onClick={() => navigate('/game')}>
+          <Button size="lg" onClick={() => navigate('/game', { state: { introShown: true } })}>
             Next
           </Button>
         </div>
